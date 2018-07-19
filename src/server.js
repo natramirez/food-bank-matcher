@@ -12,7 +12,7 @@ var connectFailed = false;
 var app = express();
 var router = express.Router();
 
-//set our port to either a predetermined port number if you have set it up, or 3001
+//set our port to either a predetermined port number if you have set it up
 var port = process.env.PORT || 8080;
 
 // connect to mongodb using mongodb URI
@@ -76,7 +76,16 @@ router.route('/questions')
 app.use('/api', router);
 
 // Serve static assets
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
+if (process.env.NODE_ENV === 'production') {
+  // console.log("hereee")
+  // Serve any static files
+  app.use(express.static(path.resolve(__dirname, '..', 'build')));
+  // Handle React routing, return all requests to React app
+  // app.get('*', function(req, res) {
+  //   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  // });
+}
+// app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 //starts the server and listens for requests
 app.listen(port, function() {
