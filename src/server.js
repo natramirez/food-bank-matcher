@@ -6,7 +6,8 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var path = require('path');
-var Questions = require('../model/questions');
+// var FoodBank = require('../model/FoodBank');
+var SurplusItem = require('../model/SurplusItem');
 var connectFailed = false;
 //and create our instances
 var app = express();
@@ -17,14 +18,11 @@ var port = process.env.PORT || 8080;
 
 // connect to mongodb using mongodb URI
 var dbconfig = {
-    user:'mav-dev',
-    psw:'mavpsw123',
-    host:'ds151973',
-    port:'51973',
-    name:'mav-example'
+    user:'foodbank',
+    psw:'mongofoodbank1',
 }
-var mongoURI = 'mongodb://'+dbconfig.user+':'+dbconfig.psw+'@'+dbconfig.host+'.mlab.com:'+dbconfig.port+'/'+dbconfig.name;
-mongoose.connect(mongoURI, { useMongoClient: true });
+var mongoURI = "mongodb://"+dbconfig.user+":"+dbconfig.psw+"@ds141631.mlab.com:41631/food-bank-matcher";
+mongoose.connect(mongoURI, {useMongoClient: true });
 
 var db = mongoose.connection;
 db.on('error', function(err) {
@@ -54,21 +52,65 @@ router.get('/', function(req, res) {
 });
 
 //adding the /questions route to our /api router
-router.route('/questions')
+router.route('/updateSurplus')
+  //retrieve all questions from the database
+  .put(function(req, res) {
+    if (connectFailed) res.send({'name':'MongoError'});
+    if (!req.body || !req.body.foodBankName || !req.body.itemName 
+      || !req.body.quantity || !req.body.categories) {
+        console.log('err: missing parameters');
+        res.send("Missing parameters in updateSurplus request.");
+    }
+    var foodBankName = req.body.foodBankName;
+    var itemName = req.body.itemName;
+    var quantity = req.body.quantity;
+    var category = req.body.category;
+    var newItem = new SurplusItem({
+      foodBankName: foodBankName, 
+      itemName: itemName,
+      quantity: quantity,
+      category: category
+    });
+    newItem.save();
+      //responds with a json object of our database questions.
+    res.json("Surplus item successfully added.");
+    // });
+  });
+
+router.route('/searchByCategory')
   //retrieve all questions from the database
   .get(function(req, res) {
     if (connectFailed) res.send({'name':'MongoError'});
-    if (req.query && req.query.numQuestions) {
-      var numQuestions = JSON.parse(req.query.numQuestions);      
+    if (req.query && req.query.category) {
+      // var category = JSON.parse(req.query.category);
+      var category = req.query.category
     }
+    // var surplusItem = {"itemName": itemName, "quantity":quantity, "category":category}
     //looks at our Question Schema
-    Questions.aggregate({'$sample': { 'size': numQuestions }}, function(err, questions) {
+    SurplusItem.find({"categories": category},function(err, items) {
       if (err) {
         console.log('err: ' + err);
         res.send(err);
       }
       //responds with a json object of our database questions.
-      res.json(questions);
+      res.json(items);
+    });
+  });
+  router.route('/searchByItem')
+  //retrieve all questions from the database
+  .get(function(req, res) {
+    if (connectFailed) res.send({'name':'MongoError'});
+    if (req.query && req.query.itemName) {
+      var itemName = req.query.itemName;
+    }
+    //looks at our Question Schema
+    SurplusItem.find({"$text": {"$search": itemName}}, function(err, items) {
+      if (err) {
+        console.log('err: ' + err);
+        res.send(err);
+      }
+      //responds with a json object of our database questions.
+      res.json(items);
     });
   });
 
