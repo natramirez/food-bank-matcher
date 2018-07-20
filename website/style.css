@@ -1,0 +1,86 @@
+/*font-family: 'Roboto', sans-serif;*/
+/*font-family: futura, sans-serif;*/
+
+h1{
+	font-family: futura, sans-serif;
+}
+
+p{
+	font-family: 'Roboto', sans-serif;
+}
+
+.navbar{
+	margin-top: 20px;
+}
+
+.navbar-brand img{
+	height: 30px;
+	width: auto;
+}
+
+.navbar a{
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.nav-item{
+	margin-left: 30px;
+}
+
+.nav-item a{
+	margin-top: 20px;
+}
+
+.navbar #active{
+	color: #FF9F00;
+}
+
+.material-icons.md-36 {
+	margin-left: 30px;
+	font-size: 36px;
+}
+
+.material-icons.grey200 {
+	color: grey;
+}
+
+.home-image{
+	position: relative;
+}
+
+.home-image img{
+	padding: 30px 18px 20px 18px;
+}
+
+.home-image h2{
+	font-family: futura, sans-serif;
+	font-size: 45px;
+	text-align: right;
+	color: white;
+}
+
+.home-image .overlay-text{
+	position: absolute;
+    bottom: 40%;
+    right: 8%;
+}
+
+.home-image button{
+	border-style: none;
+	background-color: #95FAA5;
+	font-family: 'Roboto', sans-serif;
+	color: black;
+	letter-spacing: 0.8px;
+	align-content: right;
+	padding: 10px 20px 10px 20px;
+	position: absolute;
+    top: 120%;
+    right: 0%;
+}
+
+.home-image button:hover{
+	background-color: #95FAA5;
+	color: black;
+}
