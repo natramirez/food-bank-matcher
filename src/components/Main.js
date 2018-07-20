@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import WelcomePage from './WelcomePage';
-import ExamPage from './ExamPage';
-import QuizPage from './QuizPage';
-import DriversGuidePage from './DriversGuidePage';
+import SurplusPage from './SurplusPage';
+import MarketplacePage from './MarketplacePage';
+// import DriversGuidePage from './DriversGuidePage';
 import NotFoundPage from './NotFoundPage';
 
 class Main extends Component {
@@ -13,9 +13,9 @@ class Main extends Component {
         <main>
           <Switch>
             <Route exact path="/" component={WelcomePage} />
-            <Route path="/examen_completo" component={ExamPage} />
+            <Route path="/marketplace" component={MarketplacePage} />
             {/* <Route exact path="/examen_express" component={QuizPage} /> */}
-            <Route exact path="/guia_de_manejo" component={DriversGuidePage} />
+            <Route exact path="/surplus" component={SurplusPage} />
             <Route path="*" component={NotFoundPage}/>
           </Switch>
         </main>

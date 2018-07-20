@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import logo from '../logo_small.png';
 import '../App.css';
 
 class TopNav extends Component {
@@ -23,20 +24,25 @@ class TopNav extends Component {
     return (
     <div className="top-nav">
         <ul className={"top-nav-list" + this.setClass()}>
-            <li className='nav-tabs'>
-              <NavLink exact to="/">Inicio</NavLink>
+            <li className='nav-tabs' >
+              <NavLink exact to="/">
+              <div className="logo">
+                <img src={logo} className="App-logo" alt="logo" />
+              </div>
+              </NavLink>
             </li>
             <li className='nav-tabs'>
-              <NavLink to="/examen_completo">Examen completo</NavLink>
+              <NavLink to="/marketplace">Marketplace</NavLink>
             </li>
             {/* <li className='nav-tabs'>
               <NavLink to="/examen_express">Examen express</NavLink>
             </li> */}
             <li className='nav-tabs'>
-              <NavLink to="/guia_de_manejo">Guia de manejo</NavLink>
+              <NavLink to="/surplus">Surplus</NavLink>
             </li>
-            <li className='nav-icon' onClick={this.toggleClassBool.bind(this)}>
-            &#9776;
+            <li>
+              <i className='fas fa-user-circle' />
+              {/* <i className="fas fa-user-circle"/> */}
             </li>
         </ul>
     </div>
