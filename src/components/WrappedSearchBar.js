@@ -95,7 +95,7 @@ class WrappedSearchBar extends React.Component {
 		return (
 		<form onSubmit={this.props.displayResults(this.state.searchItem, this.state.category)}>
 			<select onChange={this.setCategory}>
-				<option value="Any" >Any</option>
+				<option value="Any">Any</option>
 				<option value="Produce">Produce</option>
 				<option value="Canned Goods">Canned Goods</option>
 				<option value="Snacks">Snacks</option>
@@ -111,7 +111,6 @@ class WrappedSearchBar extends React.Component {
 			onKeyPress={this.handleKeyPress}
 			/>
 			<input id="search-btn" type="submit" value={"Search"} className="btn btn-lg btn-default cont-btn"/>;
-
 		</form>
 
 		// <Description/>

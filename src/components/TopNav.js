@@ -24,25 +24,19 @@ class TopNav extends Component {
     return (
     <div className="top-nav">
         <ul className={"top-nav-list" + this.setClass()}>
-            <li className='nav-tabs' >
-              <NavLink exact to="/">
-              <div className="logo">
-                <img src={logo} className="App-logo" alt="logo" />
-              </div>
-              </NavLink>
-            </li>
             <li className='nav-tabs'>
-              <NavLink to="/marketplace">Marketplace</NavLink>
+              <NavLink to="/marketplace">MARKETPLACE</NavLink>
             </li>
             {/* <li className='nav-tabs'>
               <NavLink to="/examen_express">Examen express</NavLink>
             </li> */}
             <li className='nav-tabs'>
-              <NavLink to="/surplus">Surplus</NavLink>
+              <NavLink to="/surplus">SURPLUS</NavLink>
             </li>
-            <li>
-              <i className='fas fa-user-circle' />
-              {/* <i className="fas fa-user-circle"/> */}
+            <li className='nav-tabs'>
+              <NavLink exact to="/">
+                <i className='fas fa-user-circle' />
+              </NavLink>
             </li>
         </ul>
     </div>
