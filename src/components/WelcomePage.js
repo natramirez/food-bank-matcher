@@ -11,7 +11,7 @@ class WelcomePage extends Component {
                 <div className="overlay-text">
                     <h2>we help food banks<br/>distribute their<br/>surplus supplies</h2>
                     {/* TODO: add onClick property to button and route to an about us page*/}
-                    <button type="button" class="btn btn-primary">Learn More</button>
+                    <button type="button" className="btn btn-primary">Learn More</button>
                 </div>
             </div>
         </div>
