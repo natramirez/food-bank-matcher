@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from '../logo_small.png';
+// import logo from '../logo_small.png';
 import '../App.css';
 
 class TopNav extends Component {

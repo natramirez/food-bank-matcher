@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 
 class WrappedSearchBar extends React.Component {
@@ -72,24 +72,24 @@ class WrappedSearchBar extends React.Component {
 			// })
 		}
 	}
-	 displayFetchedData(foodbank, i) {
-		const {FoodBankName, ItemName, Quantity, Categories} = foodbank;
+	//  displayFetchedData(foodbank, i) {
+	// 	const {FoodBankName, ItemName, Quantity, Categories} = foodbank;
 		
 	
-		const Description = () => (
-			<div>
-				{FoodBankName}
-				<br/>
-				{ItemName}
-				<br/>
-				{Quantity}
-				<br/>
-				{Categories}
+	// 	const Description = () => (
+	// 		<div>
+	// 			{FoodBankName}
+	// 			<br/>
+	// 			{ItemName}
+	// 			<br/>
+	// 			{Quantity}
+	// 			<br/>
+	// 			{Categories}
 
 				
-			</div>
-		);
-	}
+	// 		</div>
+	// 	);
+	// }
 	render() {
 		// const errorText = "Invalid input";
 		return (

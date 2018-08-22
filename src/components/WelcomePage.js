@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import image from '../images/food_cropped.jpg'
 
 class WelcomePage extends Component {
@@ -7,7 +7,7 @@ class WelcomePage extends Component {
     return (
         <div className="page-content">
             <div className="home-image">
-                <img src={image} className="img-fluid" alt="Responsive image" />
+                <img src={image} className="img-fluid" alt="Produce" />
                 <div className="overlay-text">
                     <h2>we help food banks<br/>distribute their<br/>surplus supplies</h2>
                     {/* TODO: add onClick property to button and route to an about us page*/}
