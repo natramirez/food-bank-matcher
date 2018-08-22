@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import WrappedSearchBar from './WrappedSearchBar';
-import axios from 'axios';
+// import axios from 'axios';
 
 class MarketplacePage extends Component {
     constructor(props) {

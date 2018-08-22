@@ -41,37 +41,37 @@ class WrappedSearchBar extends React.Component {
 		});
 	}
 
-	handleKeyPress(event) {
-		const {history} = this.props;
-		if (event.key === "Enter") {
+	// handleKeyPress(event) {
+	// 	// const {history} = this.props;
+	// 	if (event.key === "Enter") {
 
-			// if (this.state.invalidInput) {
-			// 	return
-			// } // Don't search if the input isn't valid
+	// 		// if (this.state.invalidInput) {
+	// 		// 	return
+	// 		// } // Don't search if the input isn't valid
 
-			// if (this.props.location.pathname === "/search/results") {
-			// 	// TODO: Find a better solution instead of reloading, as this version is slow
-			// 	window.location.reload();
-			// }
+	// 		// if (this.props.location.pathname === "/search/results") {
+	// 		// 	// TODO: Find a better solution instead of reloading, as this version is slow
+	// 		// 	window.location.reload();
+	// 		// }
 
-			// if (this.state.searchKey) {
-			// 	console.log("emptY")
-			// } else {
-			// 	console.log("Replace with empty string")
-			// }
-			// // console.log("search" + this.state.searchKey);
+	// 		// if (this.state.searchKey) {
+	// 		// 	console.log("emptY")
+	// 		// } else {
+	// 		// 	console.log("Replace with empty string")
+	// 		// }
+	// 		// // console.log("search" + this.state.searchKey);
 
-			// // Pass category to search results
-			// history.push({
-			// 	pathname: "/search/results",
-			// 	state: {
-			// 		category: this.state.category,
-			// 		inputSearch: this.state.searchKey ? this.state.searchKey : " ",
-			// 		shouldSearch: true,
-			// 	}
-			// })
-		}
-	}
+	// 		// // Pass category to search results
+	// 		// history.push({
+	// 		// 	pathname: "/search/results",
+	// 		// 	state: {
+	// 		// 		category: this.state.category,
+	// 		// 		inputSearch: this.state.searchKey ? this.state.searchKey : " ",
+	// 		// 		shouldSearch: true,
+	// 		// 	}
+	// 		// })
+	// 	}
+	// }
 	//  displayFetchedData(foodbank, i) {
 	// 	const {FoodBankName, ItemName, Quantity, Categories} = foodbank;
 		
