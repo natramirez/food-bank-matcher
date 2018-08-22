@@ -13,7 +13,7 @@ class WrappedSearchBar extends React.Component {
 
 		this.searchTextChanged = this.searchTextChanged.bind(this);
 		this.setCategory = this.setCategory.bind(this);
-		this.handleKeyPress = this.handleKeyPress.bind(this);
+		// this.handleKeyPress = this.handleKeyPress.bind(this);
 	}
 
 	searchTextChanged({target: {value}}) {
