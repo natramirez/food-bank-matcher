@@ -45,31 +45,31 @@ class WrappedSearchBar extends React.Component {
 		const {history} = this.props;
 		if (event.key === "Enter") {
 
-			if (this.state.invalidInput) {
-				return
-			} // Don't search if the input isn't valid
+			// if (this.state.invalidInput) {
+			// 	return
+			// } // Don't search if the input isn't valid
 
-			if (this.props.location.pathname === "/search/results") {
-				// TODO: Find a better solution instead of reloading, as this version is slow
-				window.location.reload();
-			}
+			// if (this.props.location.pathname === "/search/results") {
+			// 	// TODO: Find a better solution instead of reloading, as this version is slow
+			// 	window.location.reload();
+			// }
 
-			if (this.state.searchKey) {
-				console.log("emptY")
-			} else {
-				console.log("Replace with empty string")
-			}
-			// console.log("search" + this.state.searchKey);
+			// if (this.state.searchKey) {
+			// 	console.log("emptY")
+			// } else {
+			// 	console.log("Replace with empty string")
+			// }
+			// // console.log("search" + this.state.searchKey);
 
-			// Pass category to search results
-			history.push({
-				pathname: "/search/results",
-				state: {
-					category: this.state.category,
-					inputSearch: this.state.searchKey ? this.state.searchKey : " ",
-					shouldSearch: true,
-				}
-			})
+			// // Pass category to search results
+			// history.push({
+			// 	pathname: "/search/results",
+			// 	state: {
+			// 		category: this.state.category,
+			// 		inputSearch: this.state.searchKey ? this.state.searchKey : " ",
+			// 		shouldSearch: true,
+			// 	}
+			// })
 		}
 	}
 	 displayFetchedData(foodbank, i) {
@@ -93,7 +93,7 @@ class WrappedSearchBar extends React.Component {
 	render() {
 		// const errorText = "Invalid input";
 		return (
-		<form onSubmit={this.props.displayResults(this.state.searchItem, this.state.category)}>
+		<form onSubmit={e => {e.preventDefault(); console.log("submit btn");this.props.displayResults(this.state.searchItem, this.state.category);}}>
 			<select onChange={this.setCategory}>
 				<option value="Any">Any</option>
 				<option value="Produce">Produce</option>
@@ -108,9 +108,9 @@ class WrappedSearchBar extends React.Component {
 			<input
 			placeholder="Search for item"
 			onChange={this.searchTextChanged}
-			onKeyPress={this.handleKeyPress}
+			// onKeyPress={this.handleKeyPress}
 			/>
-			<input id="search-btn" type="submit" value={"Search"} className="btn btn-lg btn-default cont-btn"/>;
+			<input id="search-btn" type="submit" value={"Search"} className="btn btn-lg btn-default cont-btn"/>
 		</form>
 
 		// <Description/>

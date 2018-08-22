@@ -64,12 +64,12 @@ router.route('/updateSurplus')
     var foodBankName = req.body.foodBankName;
     var itemName = req.body.itemName;
     var quantity = req.body.quantity;
-    var category = req.body.category;
+    var category = req.body.categories;
     var newItem = new SurplusItem({
       foodBankName: foodBankName, 
       itemName: itemName,
       quantity: quantity,
-      category: category
+      categories: category
     });
     newItem.save();
       //responds with a json object of our database questions.
@@ -77,43 +77,25 @@ router.route('/updateSurplus')
     // });
   });
 
-router.route('/searchByCategory')
+router.route('/search')
   //retrieve all questions from the database
   .get(function(req, res) {
     if (connectFailed) res.send({'name':'MongoError'});
-    if (req.query && req.query.category) {
-      // var category = JSON.parse(req.query.category);
-      var category = req.query.category
+    if (req.query && (req.query.itemName || req.query.categories)) {
+      var catSearchFilter = req.query.categories == "Any" ? '' : `"categories": {"$all" : ["${req.query.categories}"]}`;
+      var itemSearchFilter = req.query.itemName ? `"$text": {"$search": "${req.query.itemName}"}` : '';
+      var comma = req.query.itemName && req.query.categories ? ',' : '';
+      var searchFilter = catSearchFilter == '' ? JSON.parse(`{${itemSearchFilter}}`) : JSON.parse(`{${catSearchFilter}${comma}${itemSearchFilter}}`);
+      SurplusItem.find(searchFilter, function(err, items) {
+        if (err) {
+          console.log('err: ' + err);
+          res.send(err);
+        }
+        console.log("items: ", items);
+        res.json(items);
+      });
     }
-    // var surplusItem = {"itemName": itemName, "quantity":quantity, "category":category}
-    //looks at our Question Schema
-    SurplusItem.find({"categories": category},function(err, items) {
-      if (err) {
-        console.log('err: ' + err);
-        res.send(err);
-      }
-      //responds with a json object of our database questions.
-      res.json(items);
-    });
   });
-  router.route('/searchByItem')
-  //retrieve all questions from the database
-  .get(function(req, res) {
-    if (connectFailed) res.send({'name':'MongoError'});
-    if (req.query && req.query.itemName) {
-      var itemName = req.query.itemName;
-    }
-    //looks at our Question Schema
-    SurplusItem.find({"$text": {"$search": itemName}}, function(err, items) {
-      if (err) {
-        console.log('err: ' + err);
-        res.send(err);
-      }
-      //responds with a json object of our database questions.
-      res.json(items);
-    });
-  });
-
 //Use our router configuration when we call /api
 app.use('/api', router);
 

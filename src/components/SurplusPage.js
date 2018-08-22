@@ -12,10 +12,10 @@ class SurplusPage extends Component {
 		super(props);
 
         this.state = {
-            FoodBankName: 'Hopelink',
-            ItemName: 'name',
-            Quantity: 'quantity',
-            Category: 'category',
+            FoodBankName: '',
+            ItemName: '',
+            Quantity: '',
+            Category: '',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -96,22 +96,22 @@ class SurplusPage extends Component {
                 <br/>
                 <input type="text" value={this.state.FoodBankName}
                 onChange={this.FoodBankNameChanged}
-                placeholder="FoodBank Name.."></input>
+                placeholder="Food Bank"></input>
                 <br/>
                 <br/>
                 <input type="text" value={this.state.ItemName}
                 onChange={this.ItemNameChanged}
-                placeholder="Item Name.."></input>
+                placeholder="Item Name"></input>
                 <br/>
                 <br/>
                 <input type="text" value={this.state.Quantity}
                 onChange={this.QuantityChanged}
-                placeholder="Quantity.."></input>
+                placeholder="Quantity"></input>
                 <br/>
                 <br/>
                 <input type="text" value={this.state.Category}
                 onChange={this.CategoryChanged}
-                placeholder="Category.."></input>
+                placeholder="Category"></input>
                 <br/>
                 <br/>
                 <input type="submit" value="Submit" />
