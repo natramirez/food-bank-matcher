@@ -55,12 +55,16 @@ router.get('/', function(req, res) {
 router.route('/updateSurplus')
   //retrieve all questions from the database
   .put(function(req, res) {
-    if (connectFailed) res.send({'name':'MongoError'});
+    if (connectFailed) res.send({errorType:"DB error"});
     if (!req.body || !req.body.foodBankName || !req.body.itemName 
-      || !req.body.quantity || !req.body.categories) {
+      || !req.body.quantity || !req.body.categories || req.body.categories.length == 0 
+      || req.body.categories[0] == '') {
         console.log('err: missing parameters');
-        res.send("Missing parameters in updateSurplus request.");
+        res.send({error: "Missing parameters"});
+        return;
     }
+    console.log("item: ", req.body);
+    console.log("cat length: ", req.body.categories.length);
     var foodBankName = req.body.foodBankName;
     var itemName = req.body.itemName;
     var quantity = req.body.quantity;
@@ -71,14 +75,19 @@ router.route('/updateSurplus')
       quantity: quantity,
       categories: category
     });
-    newItem.save();
-      //responds with a json object of our database questions.
-    res.json("Surplus item successfully added.");
-    // });
+    newItem.save(function(err, results) {
+      if (err) {
+        console.log('Error adding item:');
+        console.log(err);
+        res.send({error: "DB error"});
+        return;
+      }
+      console.log("updateSurplus result: ", results);
+      res.json("Surplus item successfully added.");
+    }); 
   });
 
 router.route('/search')
-  //retrieve all questions from the database
   .get(function(req, res) {
     if (connectFailed) res.send({'name':'MongoError'});
     if (req.query && (req.query.itemName || req.query.categories)) {

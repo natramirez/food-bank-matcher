@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 const SurplusItemSchema = new mongoose.Schema({
     foodBankName: {type: String},
     itemName:{type: String},
-    quantity: {type: Number},
+    quantity: {type: String},
     perishable: {type: Boolean},
     expirationDate: {type: String},
     categories: [{ type: String }]

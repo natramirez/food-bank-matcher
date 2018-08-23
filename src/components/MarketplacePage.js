@@ -56,7 +56,7 @@ class MarketplacePage extends Component {
     render() {
     return (
         <div className="page-content">
-            <h1 className="welcome-heading">Marketplace</h1>
+            <h1 className="welcome-heading">Search the Marketplace</h1>
             <WrappedSearchBar displayResults={this.displayResults}/>
             {this.state.results ? (<div>{this.createResultBoxes(this.state.results)}</div>) : ""}
             {this.state.errorMsg ? (<div>{this.state.errorMsg}</div>) : ""}

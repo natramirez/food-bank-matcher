@@ -60,14 +60,12 @@ class SurplusPage extends Component {
         .then(res => {
             console.log('res.data: ' + JSON.stringify(res.data));
             this.questions = res.data;
-            if (res.data.name && res.data.name === "MongoError") {
-                // this.handleError();
-                alert("An error occurred. Please try again later.")
-            }
-            else {
-                alert("Surplus item has been added successfully.")
-                // this.randomizeAnswers(this.state.curQuestionNum);
-                // this.setState({message: null});                
+            if (res.data.name && res.data.error === "MongoError") {
+                alert("Error adding item. Please try again later.")
+            } else if (res.data.error === "Missing parameters") {
+                alert("Please fill in all required fields and try again.")
+            } else {
+                alert("Surplus item has been added successfully.")               
             }
         });
     }
