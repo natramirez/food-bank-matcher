@@ -63,8 +63,6 @@ router.route('/updateSurplus')
         res.send({error: "Missing parameters"});
         return;
     }
-    console.log("item: ", req.body);
-    console.log("cat length: ", req.body.categories.length);
     var foodBankName = req.body.foodBankName;
     var itemName = req.body.itemName;
     var quantity = req.body.quantity;
