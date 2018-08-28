@@ -69,28 +69,14 @@ class SurplusPage extends Component {
             }
         });
     }
-    // handleError() {
-    //     this.setState({message: "An error occurred. Please try again later."});
-    // }
-    // constructor(props) {
-    //     super(props);
-    //     this.goToResultsPage = this.goToResultsPage.bind(this);
-    //     this.questions = [];
-    //     this.userAnswers = [];
-    // }
-    // goToResultsPage(questionsList, userAnswersList) {
-    //     this.questions = questionsList;
-    //     this.userAnswers = userAnswersList;
-    //     this.props.history.push(this.props.match.path + '/resultados');
-    // }
     render() {
         // if (!this.state.message) {
         return (
             <div className="page-content">
-                <h1 className="page-title">Surplus</h1>
+                <h1 className="page-title">Add a Surplus Item to the Marketplace</h1>
                 <form onSubmit={this.handleSubmit}>
-                <br/>
-                <br/>
+                {/* <br/> */}
+                {/* <br/> */}
                 <br/>
                 <input type="text" value={this.state.FoodBankName}
                 onChange={this.FoodBankNameChanged}

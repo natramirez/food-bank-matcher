@@ -8,6 +8,7 @@ class MarketplacePage extends Component {
         this.state = {};
         this.displayResults = this.displayResults.bind(this);
         this.createResultBoxes = this.createResultBoxes.bind(this);
+        this.handleReserveBtnClick = this.handleReserveBtnClick.bind(this);
 
     }
     componentDidMount() {
@@ -18,19 +19,38 @@ class MarketplacePage extends Component {
         this._isMounted = false;
     }
     createResult = (res,index) => {
-        var reserveBtn = <button label="Reserve" value="Reserve"/>;
+        var reserveBtnText = res.status && (res.status === "Reserved") ? "Waitlist": "Reserve";
         return (
           <div className="result-box" key={index}>
             <div className="result-box-col"> {res.itemName}</div>
             <div className="result-box-col"> {res.quantity}</div>
             <div className="result-box-col"> {res.categories}</div>
             <div className="result-box-col"> {res.foodBankName}</div>
-            {reserveBtn}
+            <button label={reserveBtnText} onClick={event => this.handleReserveBtnClick(event, res, reserveBtnText)}>{reserveBtnText}</button>
           </div>
       )};
     createResultBoxes = (results) => (
         results.map(this.createResult)
     );
+    handleReserveBtnClick(event, item, text) {
+        event.preventDefault();
+        if (item.status === "Reserved") {
+            console.log()
+            // add the current user to the waitlist
+            // change button to "On waitlist" with own color
+            // (on hover, change text to "Remove from waitlist" or something like that?)
+        } else if (text === "Reserve") {
+            console.log("hello")
+            alert(`The item ${item.itemName} has been reserved.`);
+            // change item's status to reserved, 
+            // add current user to item's reserved list
+            // add item to user's reserved list
+            // change button from "Reserve" to "Reserved" and new color
+            // (on hover, change text to "unreserve" or something like that?)
+        } else {
+            console.log("else stmnt in handleReserveBtnClick")
+        }
+    }
     displayResults(item, category) {
         if (!item && !category) {return};
         var url = 'http://localhost:8080/api/search?';
@@ -56,7 +76,7 @@ class MarketplacePage extends Component {
     render() {
     return (
         <div className="page-content">
-            <h1 className="welcome-heading">Search the Marketplace</h1>
+            <h1 className="page-title">Search the Marketplace</h1>
             <WrappedSearchBar displayResults={this.displayResults}/>
             {this.state.results ? (<div>{this.createResultBoxes(this.state.results)}</div>) : ""}
             {this.state.errorMsg ? (<div>{this.state.errorMsg}</div>) : ""}
