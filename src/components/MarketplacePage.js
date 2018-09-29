@@ -112,6 +112,9 @@ class MarketplacePage extends Component {
                 // OPTION 2: have separate status field, which changes to "Available" if no user
                 //      on item's waitlist, or stays as "Reserved" if user on item's waitlist
                 //      Button text changes to "Reserve" or "Waitlist" depending on above case
+                default:
+                    console.log("Error occurred in reserve button click. Had incorrect text");
+                    break;
             
         }
     }

@@ -14,7 +14,7 @@ class Modal extends Component {
     toggleModal(event) {
         event.preventDefault();
         this.setState({ 
-            modalClassName: this.state.modalClassName == "modal" ? "modal showModal" : "modal"
+            modalClassName: this.state.modalClassName === "modal" ? "modal showModal" : "modal"
         });
     }
 
