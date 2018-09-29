@@ -22,7 +22,12 @@ var dbconfig = {
     psw:'mongofoodbank1',
 }
 var mongoURI = "mongodb://"+dbconfig.user+":"+dbconfig.psw+"@ds141631.mlab.com:41631/food-bank-matcher";
-mongoose.connect(mongoURI, {useMongoClient: true });
+mongoose.connect(mongoURI, {
+  useMongoClient: true,
+  reconnectTries: Number.MAX_VALUE,
+  // sets the delay between every retry (milliseconds)
+  reconnectInterval: 1000 
+});
 
 var db = mongoose.connection;
 db.on('error', function(err) {
@@ -51,14 +56,19 @@ router.get('/', function(req, res) {
   res.json({ message: 'API Initialized!'});
 });
 
-//adding the /questions route to our /api router
+function isSurplusItemValid(body) {
+  var categories = ["Produce", "Canned Goods", "Snacks", "Beverages", 
+  "Frozen", "Cereal", "Pasta", "Bread \& Baked Goods","Dairy \& Eggs","Meat \& Seafood","Miscellaneous"];
+  return body && body.foodBankName && body.itemName 
+  && body.quantity && body.categories && (body.categories.length != 0) 
+  && (body.categories[0] != '') && categories.includes(body.categories[0]);
+}
+
 router.route('/updateSurplus')
-  //retrieve all questions from the database
   .put(function(req, res) {
     if (connectFailed) res.send({errorType:"DB error"});
-    if (!req.body || !req.body.foodBankName || !req.body.itemName 
-      || !req.body.quantity || !req.body.categories || req.body.categories.length == 0 
-      || req.body.categories[0] == '') {
+    if (!isSurplusItemValid(req.body)) {
+        console.log("req.body: ", req.body);
         console.log('err: missing parameters');
         res.send({error: "Missing parameters"});
         return;
@@ -67,12 +77,20 @@ router.route('/updateSurplus')
     var itemName = req.body.itemName;
     var quantity = req.body.quantity;
     var category = req.body.categories;
-    var newItem = new SurplusItem({
+    var status = req.body.status;
+    var id = req.body.id;
+    var item = {
       foodBankName: foodBankName, 
       itemName: itemName,
       quantity: quantity,
-      categories: category
-    });
+      categories: category,
+      status: status
+    }
+    if (id !== '') {
+      item._id = id;
+    }
+    console.log("item after checking for id: " + item);
+    var newItem = new SurplusItem(item);
     newItem.save(function(err, results) {
       if (err) {
         console.log('Error adding item:');
@@ -103,20 +121,13 @@ router.route('/search')
       });
     }
   });
-//Use our router configuration when we call /api
+
 app.use('/api', router);
 
-// Serve static assets
 if (process.env.NODE_ENV === 'production') {
-  // console.log("hereee")
-  // Serve any static files
+  // Serve static assets
   app.use(express.static(path.resolve(__dirname, '..', 'build')));
-  // Handle React routing, return all requests to React app
-  // app.get('*', function(req, res) {
-  //   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  // });
 }
-// app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 //starts the server and listens for requests
 app.listen(port, function() {

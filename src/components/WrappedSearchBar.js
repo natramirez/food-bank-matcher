@@ -6,7 +6,6 @@ class WrappedSearchBar extends React.Component {
 		super(props);
 		this.state = {
 			category: "Any",
-			// invalidInput: false,
 		};
 
 		this.searchTextChanged = this.searchTextChanged.bind(this);
@@ -14,18 +13,6 @@ class WrappedSearchBar extends React.Component {
 	}
 
 	searchTextChanged({target: {value}}) {
-		// RegEx for letters and numbers
-		// Check if search input matches the given RegEx
-		// const acceptedChars = /^[0-9a-z A-Z]+$/;
-		// if (value.length > 0 && value.match(acceptedChars) === null) {
-		// 	this.setState({
-		// 		invalidInput: true,
-		// 	})
-		// } else {
-		// 	this.setState({
-		// 		invalidInput: false,
-		// 	})
-		// }
 		this.setState({
 			searchItem: value
 		})
@@ -37,7 +24,6 @@ class WrappedSearchBar extends React.Component {
 		});
 	}
 	render() {
-		// const errorText = "Invalid input";
 		return (
 		<form onSubmit={e => {e.preventDefault();this.props.displayResults(this.state.searchItem, this.state.category);}}>
 			<select onChange={this.setCategory}>
@@ -49,6 +35,9 @@ class WrappedSearchBar extends React.Component {
 				<option value="Frozen">Frozen</option>
 				<option value="Cereal">Cereal</option>
 				<option value="Pasta">Pasta</option>
+				<option value="Bread \& Baked Goods">Bread & Baked Goods</option>
+				<option value="Dairy \& Eggs">Dairy & Eggs</option>
+				<option value="Meat \& Seafood">Meat & Seafood</option>
 				<option value="Miscellaneous">Miscellaneous</option>
 			</select>
 			<input

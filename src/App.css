@@ -343,3 +343,8 @@ p.welcome-lead {
 .top-nav-list .nav-icon {
   display: none;
 }
+
+/* Added CSS for Distribute */
+.showModal {
+  display: block;
+}

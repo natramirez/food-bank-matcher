@@ -8,7 +8,8 @@ const SurplusItemSchema = new mongoose.Schema({
     quantity: {type: String},
     perishable: {type: Boolean},
     expirationDate: {type: String},
-    categories: [{ type: String }]
+    categories: [{ type: String }],
+    status: {type: String}
 
 }, { collection : 'SurplusItems' });
 
