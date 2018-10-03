@@ -47,7 +47,7 @@ class ItemForm extends Component {
         const Status = this.state.Status;
         const Id = this.state.Id;
        
-        var serverURL =  'http://localhost:8080/api/updateSurplus';
+        var serverURL =  '/api/updateSurplus';
         axios.put(serverURL, {
             foodBankName: FoodBankName,
             itemName: ItemName,

@@ -121,7 +121,7 @@ class MarketplacePage extends Component {
     
     displayResults(item, category) {
         if (!item && !category) {return};
-        var url = 'http://localhost:8080/api/search?';
+        var url = '/api/search?';
         var params;
         if (item && category) {
             params = `itemName=${item}&categories=${category}`
