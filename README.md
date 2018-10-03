@@ -4,3 +4,5 @@ To run app on localhost, run following commands in the food-bank-matcher directo
 - 'npm install'
 - 'npm start' in one terminal session
 - 'nodemon src/server.js' in another terminal session
+
+Deployed at: https://distribute-food.herokuapp.com/
