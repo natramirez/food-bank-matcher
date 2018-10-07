@@ -11,7 +11,8 @@ class ItemForm extends Component {
             Quantity: props.presetData ? props.presetData.quantity : '',
             Category: props.presetData ? props.presetData.categories[0] : 'Produce',
             Status: props.presetData ? props.presetData.status : 'Available',
-            Id: props.presetData ? props.presetData._id : ''
+            Id: props.presetData ? props.presetData._id : '',
+
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,12 +35,11 @@ class ItemForm extends Component {
     }
 
     CategoryChanged(event) {
-        console.log("cat: ", event.target.value);
         this.setState({Category: event.target.value});
     }
 
     handleSubmit(event) {
-        event.preventDefault()
+        event.preventDefault();
         const FoodBankName = this.state.FoodBankName;
         const ItemName = this.state.ItemName;
         const Quantity = this.state.Quantity;
@@ -57,11 +57,10 @@ class ItemForm extends Component {
             id: Id
           })
         .then(res => {
-            console.log('res.data: ' + JSON.stringify(res.data));
             this.questions = res.data;
             if (res.data.name && res.data.error === "MongoError") {
                 alert("Error adding item. Please try again later.");
-            } else if (res.data.error === "Missing parameters") {
+            } else if (res.data.error === "Missing/invalid parameters") {
                 alert("Please fill in all required fields and try again.");
             } else {
                 let msgStatus = this.props.presetData ? "updated" : "added";
@@ -86,7 +85,7 @@ class ItemForm extends Component {
                 <label>Quantity</label>
                 <input type="text" value={this.state.Quantity}
                 onChange={this.QuantityChanged}
-                placeholder="i.e. 3 lbs of potatoes"></input>
+                placeholder="i.e. # of lbs, boxes, dozens, etc."></input>
                 <br/>
                 <br/>
                 <label>Category</label>

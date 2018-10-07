@@ -27,9 +27,6 @@ class TopNav extends Component {
             <li className='nav-tabs'>
               <NavLink to="/marketplace">MARKETPLACE</NavLink>
             </li>
-            {/* <li className='nav-tabs'>
-              <NavLink to="/examen_express">Examen express</NavLink>
-            </li> */}
             <li className='nav-tabs'>
               <NavLink to="/surplus">SURPLUS</NavLink>
             </li>

@@ -1,6 +1,5 @@
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
 const SurplusItemSchema = new mongoose.Schema({
     foodBankName: {type: String},
@@ -9,7 +8,9 @@ const SurplusItemSchema = new mongoose.Schema({
     perishable: {type: Boolean},
     expirationDate: {type: String},
     categories: [{ type: String }],
-    status: {type: String}
+    status: {type: String},
+    reservedUserId: {type: String},
+    waitlistUserIds: [{type: String}]
 
 }, { collection : 'SurplusItems' });
 

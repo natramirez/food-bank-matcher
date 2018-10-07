@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-
 class Modal extends Component {
     constructor(props) {
 		super(props);
@@ -19,9 +18,15 @@ class Modal extends Component {
     }
 
     render() {
+        let actionBtn = this.props.modalBtn1 && this.props.modalBtn1OnClick ?
+            <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={event => {this.toggleModal(event);this.props.modalBtn1OnClick(event)}}>{this.props.modalBtn1}
+            </button> : "";
         return (
             <div>
-            <button type="button" className="btn btn-primary" data-toggle="modal" onClick={event => this.toggleModal(event)}>Edit</button>
+            <button type="button" className="btn btn-primary" data-toggle="modal" onClick={event => this.toggleModal(event)}>{this.props.modalToggleBtn}</button>
             <div className={this.state.modalClassName} tabIndex="-1" role="dialog">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
@@ -35,8 +40,14 @@ class Modal extends Component {
                             {this.props.modalBody}
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary">Save changes</button>
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={event => this.toggleModal(event)}>Close</button>
+                            {actionBtn}
+                            <button 
+                            type="button" 
+                            className="btn btn-secondary"
+                             onClick={event => this.toggleModal(event)}
+                             >
+                                Close
+                             </button>
                         </div>
                     </div>
                 </div>

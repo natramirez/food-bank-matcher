@@ -20,7 +20,12 @@ var port = process.env.PORT || 8080;
 var dbconfig = {
     user:'foodbank',
     psw:'mongofoodbank1',
-}
+};
+// add to config or enums file eventually
+var categories = ["Produce", "Canned Goods", "Snacks", "Beverages", 
+  "Frozen", "Cereal", "Pasta", "Bread \& Baked Goods","Dairy \& Eggs","Meat \& Seafood","Miscellaneous"];
+var statuses = ["Available","Reserved"];
+
 var mongoURI = "mongodb://"+dbconfig.user+":"+dbconfig.psw+"@ds141631.mlab.com:41631/food-bank-matcher";
 mongoose.connect(mongoURI, {
   useMongoClient: true,
@@ -36,14 +41,14 @@ db.on('error', function(err) {
 });
 
 //now we should configure the APi to use bodyParser and look for JSON data in the body
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //To prevent errors from Cross Origin Resource Sharing, we will set our headers to allow CORS with middleware like so:
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
 
   //and remove caching so we get the most recent comments
@@ -57,41 +62,47 @@ router.get('/', function(req, res) {
 });
 
 function isSurplusItemValid(body) {
-  var categories = ["Produce", "Canned Goods", "Snacks", "Beverages", 
-  "Frozen", "Cereal", "Pasta", "Bread \& Baked Goods","Dairy \& Eggs","Meat \& Seafood","Miscellaneous"];
   return body && body.foodBankName && body.itemName 
   && body.quantity && body.categories && (body.categories.length != 0) 
-  && (body.categories[0] != '') && categories.includes(body.categories[0]);
+  && (body.categories[0] != '') && categories.includes(body.categories[0])
+  && body.status && statuses.includes(body.status);
 }
 
 router.route('/updateSurplus')
   .put(function(req, res) {
     if (connectFailed) res.send({errorType:"DB error"});
-    if (!isSurplusItemValid(req.body)) {
-        console.log("req.body: ", req.body);
-        console.log('err: missing parameters');
-        res.send({error: "Missing parameters"});
+    if (!req.body.waitlistUserIds && (req.body.reservedUserId === null) && !isSurplusItemValid(req.body)) {
+        console.log('err: missing/invalid parameters');
+        res.send({error: "Missing/invalid parameters"});
         return;
+    } else if (req.body.status && !statuses.includes(req.body.status)) {
+      console.log('err: Invalid status parameter');
+      res.send({error: "Invalid status parameter"});
+      return;
     }
-    var foodBankName = req.body.foodBankName;
-    var itemName = req.body.itemName;
-    var quantity = req.body.quantity;
-    var category = req.body.categories;
-    var status = req.body.status;
     var id = req.body.id;
     var item = {
-      foodBankName: foodBankName, 
-      itemName: itemName,
-      quantity: quantity,
-      categories: category,
-      status: status
+      foodBankName: req.body.foodBankName, 
+      itemName: req.body.itemName,
+      quantity: req.body.quantity,
+      categories: req.body.categories,
+      status: req.body.status,
+      waitlistUserIds: req.body.waitlistUserIds,
+      reservedUserId: req.body.reservedUserId
     }
-    if (id !== '') {
-      item._id = id;
+    let upsertItem = {};
+    for (var key in item) {
+      if (item.hasOwnProperty(key) && item[key] !== undefined) {
+        upsertItem[key] = item[key];
+      }
     }
-    console.log("item after checking for id: " + item);
-    var newItem = new SurplusItem(item);
-    newItem.save(function(err, results) {
+    if (!id) {
+      id = mongoose.Types.ObjectId();
+    }
+    SurplusItem.findOneAndUpdate({_id: id}, upsertItem, {
+      upsert:true,
+      new:true
+    }, function(err, results) {
       if (err) {
         console.log('Error adding item:');
         console.log(err);
@@ -99,7 +110,7 @@ router.route('/updateSurplus')
         return;
       }
       console.log("updateSurplus result: ", results);
-      res.json("Surplus item successfully added.");
+      res.json(results);
     }); 
   });
 
@@ -116,7 +127,6 @@ router.route('/search')
           console.log('err: ' + err);
           res.send(err);
         }
-        console.log("items: ", items);
         res.json(items);
       });
     }
@@ -124,10 +134,8 @@ router.route('/search')
 
 app.use('/api', router);
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve static assets
-  app.use(express.static(path.resolve(__dirname, '..', 'build')));
-}
+// Serve static assets
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 //starts the server and listens for requests
 app.listen(port, function() {
