@@ -123,7 +123,7 @@ class MarketplaceItem extends Component {
         let reserveBtnText;
         if (item.waitlistUserIds.includes(curUserId)) {
             reserveBtnText = "Remove from Waitlist";
-        } else if (item.reservedUserId == curUserId) {
+        } else if (item.reservedUserId === curUserId) {
             reserveBtnText = "Cancel Reserve";
         } else {
             reserveBtnText = item.status && (item.status === "Reserved") ? "Waitlist": "Reserve";
@@ -138,7 +138,7 @@ class MarketplaceItem extends Component {
             modalBtn1OnClick={onClickFunc}
             />
         let regularActionBtn = <button label={reserveBtnText} type="button" className="btn btn-primary" onClick={onClickFunc}>{reserveBtnText}</button>
-        let actionBtn = reserveBtnText == "Cancel Reserve" ? modal : regularActionBtn;
+        let actionBtn = reserveBtnText === "Cancel Reserve" ? modal : regularActionBtn;
         return (
             <div className="result-box" key={this.props.index}>
                 <div className="result-box-col"> {item.itemName}</div>
