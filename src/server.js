@@ -127,6 +127,7 @@ router.route('/search')
           console.log('err: ' + err);
           res.send(err);
         }
+        console.log("items:" +items);
         res.json(items);
       });
     }

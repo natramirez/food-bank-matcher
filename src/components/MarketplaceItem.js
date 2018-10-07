@@ -140,7 +140,7 @@ class MarketplaceItem extends Component {
         let regularActionBtn = <button label={reserveBtnText} type="button" className="btn btn-primary" onClick={onClickFunc}>{reserveBtnText}</button>
         let actionBtn = reserveBtnText === "Cancel Reserve" ? modal : regularActionBtn;
         return (
-            <div className="result-box" key={this.props.index}>
+            <div className="result-box">
                 <div className="result-box-col"> {item.itemName}</div>
                 <div className="result-box-col"> {item.quantity}</div>
                 <div className="result-box-col"> {item.categories}</div>

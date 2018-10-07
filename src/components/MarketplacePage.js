@@ -41,7 +41,7 @@ class MarketplacePage extends Component {
     componentWillUnmount() {
         this._isMounted = false;
     }
-    createResult = (res,index) => <MarketplaceItem curUserId={this.props.curUserId} item={res} index={index} />;
+    createResult = (item) => <MarketplaceItem curUserId={this.props.curUserId} item={item} key={item._id}/>;
     createResultBoxes = (results) => results.map(this.createResult);
     
     displayResults(item, category) {
